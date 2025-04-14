@@ -1,0 +1,31 @@
+
+spring:
+  application:
+    name:  helium
+riptide.clients:
+  hydrogen:
+    base-url: http://localhost:8080
+    connections:
+      connect-timeout: 150 milliseconds
+      socket-timeout: 100 milliseconds
+      time-to-live: 30 seconds
+      max-per-route: 16
+#    retry:
+#      enabled: true
+#      fixed-delay: 50 milliseconds
+#      max-retries: 5
+#    circuit-breaker:
+#      enabled: true
+#      failure-threshold: 3 out of 5
+#      delay: 30 seconds
+#      success-threshold: 5 out of 5
+#    caching:
+#      enabled: true
+#      shared: false
+#      max-cache-entries: 1000
+#    tracing:
+#      enabled: true
+#      tags:
+server:
+  port: 9191
+#        peer.service: example

@@ -14,7 +14,10 @@ class HeliumApplication : CommandLineRunner {
 	override fun run(vararg args: String?) {
 		println("Hello World!")
 
-		hydrogenClient.checkHydrogen()
+		// This is a non-blocking call!
+//		hydrogenClient.checkHydrogenNonBlocking(::doSomething)
+		val artist = hydrogenClient.checkHydrogenBlocking()
+		println(artist)
 
 		println("Erster!")
 	}
@@ -22,4 +25,14 @@ class HeliumApplication : CommandLineRunner {
 
 fun main(args: Array<String>) {
 	runApplication<HeliumApplication>(*args)
+}
+
+fun doSomething(a: Artist) {
+	if (a.name.startsWith("Elvis", 0, false)) {
+		println("Elvis is here!")
+	} else {
+		println("Elvis is not here!")
+		println("Instead we have ${a.name} for you!")
+	}
+
 }

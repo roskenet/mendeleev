@@ -21,6 +21,7 @@ public class CucumberBase {
     protected MvcResult latestResult;
 
     public void executeGet(String url) throws Exception {
+
         latestResult = mockMvc.perform(get(url)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andReturn();

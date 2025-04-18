@@ -8,5 +8,5 @@ Feature: User Greeting
 
   Scenario: Calling hello with full name
     Given the client calls our service with the name "Elvis A. Presley"
-    Then the response code is 200
+    Then the response code is 209
     And the response should contain "Hello, Elvis!"

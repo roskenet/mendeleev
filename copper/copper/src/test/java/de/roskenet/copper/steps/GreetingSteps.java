@@ -2,44 +2,24 @@ package de.roskenet.copper.steps;
 
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
-import io.cucumber.spring.CucumberContextConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 
 import java.io.UnsupportedEncodingException;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-@CucumberContextConfiguration
-public class GreetingSteps {
+public class GreetingSteps extends CucumberBase {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    private MvcResult latestResult;
-
-    @Given("the client calls our service with the name {string}")
+    @Given("^the client calls our service with the name (.+)$")
     public void the_client_calls_greeting_with_name(String name) throws Exception {
-       latestResult = mockMvc.perform(get("/hello/{name}", name)
-                        .contentType(MediaType.APPLICATION_JSON))
-                .andReturn();
+        executeGet("/hello/" + name);
     }
 
-    @Then("the response code is {int}")
+    @Then("^the response code is (\\d+)$")
     public void the_response_code_is(int expectedStatus) {
         assertThat(latestResult.getResponse().getStatus()).isEqualTo(expectedStatus);
     }
 
-    @Then("the response should contain {string}")
+    @Then("^the response should contain (.+)$")
     public void the_response_should_contain(String expectedContent) throws UnsupportedEncodingException {
         assertThat(latestResult.getResponse().getContentAsString().contains(expectedContent));
     }

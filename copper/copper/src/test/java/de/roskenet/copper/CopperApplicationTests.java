@@ -9,5 +9,4 @@ class CopperApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

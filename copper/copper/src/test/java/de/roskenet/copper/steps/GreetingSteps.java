@@ -35,6 +35,11 @@ public class GreetingSteps {
         response = ResponseEntity.ok(result.getResponse().getContentAsString());
     }
 
+    @Then("the response code is {int}")
+    public void the_response_code_is(int expectedStatus) {
+        assertThat(response.getStatusCodeValue()).isEqualTo(expectedStatus);
+    }
+
     @Then("the response should contain {string}")
     public void the_response_should_contain(String expectedContent) {
         assertThat(response.getBody()).contains(expectedContent);

@@ -9,6 +9,7 @@ public class CopperController {
 
     @GetMapping("/hello/{name}")
     public String hello(@PathVariable String name) {
-        return "Hello, " + name + "!";
+        String firstName = name.split(" ")[0];
+        return "Hello, " + firstName + "!";
     }
 }

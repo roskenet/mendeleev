@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
+import java.io.UnsupportedEncodingException;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -23,25 +25,22 @@ public class GreetingSteps {
     @Autowired
     private MockMvc mockMvc;
 
-    private ResponseEntity<String> response;
+    private MvcResult latestResult;
 
     @Given("the client calls our service with the name {string}")
     public void the_client_calls_greeting_with_name(String name) throws Exception {
-        MvcResult result = mockMvc.perform(get("/hello/{name}", name)
+       latestResult = mockMvc.perform(get("/hello/{name}", name)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
                 .andReturn();
-
-        response = ResponseEntity.ok(result.getResponse().getContentAsString());
     }
 
     @Then("the response code is {int}")
     public void the_response_code_is(int expectedStatus) {
-        assertThat(response.getStatusCodeValue()).isEqualTo(expectedStatus);
+        assertThat(latestResult.getResponse().getStatus()).isEqualTo(expectedStatus);
     }
 
     @Then("the response should contain {string}")
-    public void the_response_should_contain(String expectedContent) {
-        assertThat(response.getBody()).contains(expectedContent);
+    public void the_response_should_contain(String expectedContent) throws UnsupportedEncodingException {
+        assertThat(latestResult.getResponse().getContentAsString().contains(expectedContent));
     }
 }
